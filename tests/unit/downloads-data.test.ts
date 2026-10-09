@@ -1,16 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import { loadDownloads, parseChecksums } from '../../src/lib/data/downloads';
 
-const releasesUrl = 'https://api.github.com/repos/puppet-stagehand/stagehand-release/releases';
+const releasesUrl = 'https://api.github.com/repos/puppetlabs/stagehand-release/releases';
 
 const checksumsUrl = (tag: string) =>
-  `https://github.com/puppet-stagehand/stagehand-release/releases/download/${tag}/SHA256SUMS`;
+  `https://github.com/puppetlabs/stagehand-release/releases/download/${tag}/SHA256SUMS`;
 
 const sha256sumsText = (tag: string) =>
   `${'a'.repeat(64)}  puppet-installer-linux-amd64\n${'b'.repeat(64)}  puppet-installer-darwin-arm64\n\n${tag}\n`;
 
 const binaryAssetUrl = (tag: string, filename: string) =>
-  `https://github.com/puppet-stagehand/stagehand-release/releases/download/${tag}/${filename}`;
+  `https://github.com/puppetlabs/stagehand-release/releases/download/${tag}/${filename}`;
 
 const release = (options: {
   tag: string;
@@ -24,7 +24,7 @@ const release = (options: {
     body:
       channel === null ? 'No channel here.' : `Single-binary installer.\nChannel: \`${channel}\`\n`,
     published_at: publishedAt,
-    html_url: `https://github.com/puppet-stagehand/stagehand-release/releases/tag/${tag}`,
+    html_url: `https://github.com/puppetlabs/stagehand-release/releases/tag/${tag}`,
     assets: withChecksumsAsset
       ? [
           { name: 'SHA256SUMS', browser_download_url: checksumsUrl(tag) },
@@ -83,7 +83,7 @@ describe('loadDownloads — channel-body parsing and per-channel data', () => {
         'puppet-installer-linux-amd64': binaryAssetUrl('v1.2.0', 'puppet-installer-linux-amd64'),
         'puppet-installer-darwin-arm64': binaryAssetUrl('v1.2.0', 'puppet-installer-darwin-arm64'),
       },
-      htmlUrl: 'https://github.com/puppet-stagehand/stagehand-release/releases/tag/v1.2.0',
+      htmlUrl: 'https://github.com/puppetlabs/stagehand-release/releases/tag/v1.2.0',
     });
   });
 
@@ -161,7 +161,7 @@ describe('loadDownloads — channel-body parsing and per-channel data', () => {
       tag_name: 'v9.9.9',
       body: 'Channel: `test-pilots`',
       published_at: '2026-08-30T00:00:00Z',
-      html_url: 'https://github.com/puppet-stagehand/stagehand-release/releases/tag/v9.9.9',
+      html_url: 'https://github.com/puppetlabs/stagehand-release/releases/tag/v9.9.9',
       assets: null,
     };
     const fetchImpl = vi.fn(async (input: string | URL | Request) => {

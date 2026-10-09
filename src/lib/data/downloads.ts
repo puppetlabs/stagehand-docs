@@ -4,7 +4,7 @@ import type { SiteChannel } from '../site-channel';
 // prohibition) is never named or referenced anywhere in this file. As of 2026-08-28 this public
 // repo does not exist yet (D-07); every failure path below (404, network error, unparseable body)
 // must degrade to the same honest-unavailable result, never throw out of loadDownloads (Pitfall 8).
-const RELEASES_URL = 'https://api.github.com/repos/puppet-stagehand/stagehand-release/releases';
+const RELEASES_URL = 'https://api.github.com/repos/puppetlabs/stagehand-release/releases';
 
 export interface ChannelRelease {
   version: string;
@@ -74,7 +74,7 @@ export const releaseChannelFor = (channel: SiteChannel): ReleaseChannel | undefi
 
 /**
  * Build-time, injectable-fetch loader (mirrors scripts/check-live-deployment.ts's fetchImpl
- * pattern) for the public puppet-stagehand/stagehand-release Releases API. Any failure — a
+ * pattern) for the public puppetlabs/stagehand-release Releases API. Any failure — a
  * thrown error, a non-ok status, or unparseable JSON from the releases-list fetch — resolves
  * every channel to null rather than throwing out of loadDownloads (D-07/Pitfall 8): the Astro
  * build must stay green even though this real repo does not exist yet. A per-channel SHA256SUMS

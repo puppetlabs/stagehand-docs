@@ -8,14 +8,14 @@ const allowedNonClaimLinks = new Set([
   'https://github.com/puppet-stagehand/stagehand-docs/issues',
   'https://github.com/puppet-stagehand/stagehand-docs/issues/new',
   'https://github.com/puppet-stagehand/stagehand-docs/security/advisories/new',
-  'https://github.com/puppet-stagehand/stagehand-release/issues',
-  'https://github.com/puppet-stagehand/stagehand-release/releases',
+  'https://github.com/puppetlabs/stagehand-release/issues',
+  'https://github.com/puppetlabs/stagehand-release/releases',
   'https://help.puppet.com/bolt/current/topics/bolt_installing.htm',
 ]);
 // Release-tag links (e.g. the downloads page's "latest release" link) carry a version in the
 // path, so they can't live in the exact-match set above without breaking on every release bump.
 const allowedNonClaimLinkPrefixes = [
-  'https://github.com/puppet-stagehand/stagehand-release/releases/tag/',
+  'https://github.com/puppetlabs/stagehand-release/releases/tag/',
 ];
 const canonicalBase = new URL('https://www.puppet-stagehand.com/');
 const nonNetworkSchemes = new Set(['data:', 'mailto:', 'tel:']);
