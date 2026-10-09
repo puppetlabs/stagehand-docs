@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { loadMarquee } from '../../src/lib/data/marquee';
+import type { MarqueeDocument } from '../../src/lib/data/types';
 
 const fixture = (name: string) => new URL(`../fixtures/data/${name}`, import.meta.url).pathname;
 
@@ -14,10 +15,14 @@ afterEach(() => {
 });
 
 // Writes a mutated copy of the valid fixture so each invalid case is one deliberate change.
-const mutatedFixture = (mutate: (document: Record<string, any>) => void): string => {
+const mutatedFixture = (
+  mutate: (document: MarqueeDocument & Record<string, unknown>) => void,
+): string => {
   const root = mkdtempSync(join(tmpdir(), 'stagehand-marquee-'));
   temporaryRoots.push(root);
-  const document = JSON.parse(readFileSync(fixture('marquee-valid.json'), 'utf8'));
+  const document = JSON.parse(
+    readFileSync(fixture('marquee-valid.json'), 'utf8'),
+  ) as MarqueeDocument & Record<string, unknown>;
   mutate(document);
   const path = join(root, 'marquee.json');
   writeFileSync(path, JSON.stringify(document));
@@ -64,7 +69,8 @@ describe('loadMarquee', () => {
 
   it('rejects a paid listing that carries an image reference', () => {
     const path = mutatedFixture((document) => {
-      document.paid_listings[0].image = 'ghcr.io/perforce/paid@sha256:' + 'a'.repeat(64);
+      (document.paid_listings[0] as unknown as Record<string, unknown>).image =
+        'ghcr.io/perforce/paid@sha256:' + 'a'.repeat(64);
     });
 
     expect(() => loadMarquee({ path })).toThrow(path);
