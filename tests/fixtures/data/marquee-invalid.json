@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "feed": "oci://ghcr.io/puppet-stagehand/catalog",
+  "index_digest": null,
+  "publisher_key": {
+    "fingerprint": "sha256:48ba24e6f91da7ced7540b1512d0eac37b7fa070d474d28b9f8a89a0c5955242",
+    "pem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERzD9kZTJx2uOrQdybFiHNxagf+Ie\nW1NVUaOwcNILUpQmRMKbLVtmPrqAgvJygWS5KCnuaiSiiaoTWlNI1KP9vw==\n-----END PUBLIC KEY-----\n"
+  },
+  "packs": [],
+  "paid_listings": [
+    {
+      "id": "leaky-paid",
+      "name": "Leaky Paid Add-on",
+      "summary": "A paid listing that wrongly carries a registry location.",
+      "tier": "ent",
+      "label": "Perforce add-on, licence required",
+      "image": "registry.example.com/paid/leaky@sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "versions": [{ "version": "1.0.0", "released_at": "2026-09-15" }]
+    }
+  ]
+}

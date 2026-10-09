@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -75,5 +76,32 @@ describe('loadMarquee', () => {
 
     expect(() => loadMarquee({ path })).toThrow(path);
     expect(() => loadMarquee({ path })).toThrow('/paid_listings/0');
+  });
+});
+
+describe('npm run validate:data', () => {
+  const run = (path: string) =>
+    spawnSync(
+      process.execPath,
+      ['--import', 'tsx', 'scripts/validate-data.ts', '--marquee', path],
+      {
+        cwd: process.cwd(),
+        encoding: 'utf8',
+      },
+    );
+
+  it('exits non-zero, naming the file and the path, when a paid listing carries an image', () => {
+    const result = run(fixture('marquee-invalid.json'));
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('marquee-invalid.json');
+    expect(result.stderr).toContain('/paid_listings/0');
+  });
+
+  it('exits zero and counts the packs for a valid document', () => {
+    const result = run(fixture('marquee-valid.json'));
+
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain('1 Marquee packs (1 paid listings)');
   });
 });
