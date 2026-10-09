@@ -1,5 +1,7 @@
 ---
 import BrandTriangles from '../../components/BrandTriangles.astro';
+import MarqueeCatalog from '../../components/MarqueeCatalog.astro';
+import MarqueeEmptyState from '../../components/MarqueeEmptyState.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadMarquee } from '../../lib/data/marquee';
 
@@ -56,9 +58,8 @@ const marquee = loadMarquee();
 
       <section class="marquee-block" aria-labelledby="marquee-packs-title">
         <h2 id="marquee-packs-title">Expansion Packs</h2>
-        <ul>
-          {marquee.packs.map((pack) => <li>{pack.name}</li>)}
-        </ul>
+        {marquee.packs.length === 0 ? <MarqueeEmptyState /> : null}
+        <MarqueeCatalog packs={marquee.packs} paidListings={marquee.paid_listings} />
       </section>
     </div>
   </div>

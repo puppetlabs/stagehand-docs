@@ -11,7 +11,7 @@ const roots: string[] = [];
 const buildMarqueePage = (fixture: string | undefined): string => {
   const root = mkdtempSync(join(tmpdir(), 'stagehand-marquee-build-'));
   roots.push(root);
-  const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' };
+  const env: NodeJS.ProcessEnv = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' };
   delete env.STAGEHAND_E2E_FIXTURES;
   delete env.STAGEHAND_SCALE_FIXTURES;
   delete env.STAGEHAND_MARQUEE_FIXTURE;
