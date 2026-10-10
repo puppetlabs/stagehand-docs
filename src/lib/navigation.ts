@@ -7,6 +7,7 @@ export const primaryNavigation: readonly NavigationItem[] = [
   { href: '/about/', label: 'About' },
   { href: '/features/', label: 'Features' },
   { href: '/compatibility/', label: 'Compatibility' },
+  { href: '/marquee/', label: 'Marquee' },
   { href: '/docs/', label: 'Docs' },
   { href: '/downloads/', label: 'Downloads' },
 ];

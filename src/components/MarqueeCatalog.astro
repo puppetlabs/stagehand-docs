@@ -1,0 +1,84 @@
+---
+import type { MarqueePack, MarqueePaidListing } from '../lib/data/types';
+
+interface Props {
+  packs: MarqueePack[];
+  paidListings: MarqueePaidListing[];
+}
+
+const { packs, paidListings } = Astro.props;
+
+const tierLabels: Record<string, string> = { core: 'Core', ent: 'Enterprise', adv: 'Advanced' };
+// An unknown tier shows as its raw string rather than disappearing.
+const tierLabel = (tier: string) => tierLabels[tier] ?? tier;
+---
+
+{
+  packs.length > 0 && (
+    <div class="marquee-table-frame">
+      <table class="marquee-table">
+        <caption>Free Expansion Packs published on Marquee, newest version first.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Expansion Pack</th>
+            <th scope="col">Summary</th>
+            <th scope="col">Tier</th>
+            <th scope="col">Versions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {packs.map((pack) => (
+            <tr data-pack-id={pack.id}>
+              <th scope="row">
+                <span class="marquee-table__primary">{pack.name}</span>
+                <span class="marquee-table__meta">{pack.publisher}</span>
+              </th>
+              <td>{pack.summary}</td>
+              <td>{tierLabel(pack.tier)}</td>
+              <td>
+                <ul class="marquee-versions">
+                  {pack.versions.map((version) => (
+                    <li>
+                      <span class="marquee-versions__version">{version.version}</span>
+                      <span class="marquee-versions__date">{version.released_at}</span>
+                      <code>{version.digest}</code>
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+{
+  paidListings.length > 0 && (
+    <section class="marquee-paid" aria-labelledby="marquee-paid-title">
+      <h3 id="marquee-paid-title">Perforce add-ons</h3>
+      <p>
+        These are listed so you know they exist. They are not part of the free feed and need a
+        licence from Perforce.
+      </p>
+      <ul class="marquee-paid__list">
+        {paidListings.map((listing) => (
+          <li data-paid-id={listing.id}>
+            <span class="marquee-table__primary">{listing.name}</span>
+            <span class="marquee-paid__label">{listing.label}</span>
+            <span>{listing.summary}</span>
+            <span class="marquee-table__meta">Tier: {tierLabel(listing.tier)}</span>
+            <span class="marquee-paid__versions">
+              {listing.versions.map((version) => (
+                <span>
+                  {version.version} ({version.released_at})
+                </span>
+              ))}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

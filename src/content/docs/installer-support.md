@@ -438,7 +438,7 @@ Recovery** above.
 ## Where to Report a Problem
 
 Found something wrong with the installer or the console itself? File it at
-[puppet-stagehand/stagehand-release](https://github.com/puppet-stagehand/stagehand-release/issues).
+[puppetlabs/stagehand-release](https://github.com/puppetlabs/stagehand-release/issues).
 Found something wrong with this documentation site instead, a broken link,
 a confusing page, a typo? See [Support](/support/) for this repository's own
 tracker.

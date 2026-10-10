@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-09T12:00:00Z",
+  "feed": "oci://ghcr.io/puppet-stagehand/catalog",
+  "index_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "publisher_key": {
+    "fingerprint": "sha256:48ba24e6f91da7ced7540b1512d0eac37b7fa070d474d28b9f8a89a0c5955242",
+    "pem": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERzD9kZTJx2uOrQdybFiHNxagf+Ie\nW1NVUaOwcNILUpQmRMKbLVtmPrqAgvJygWS5KCnuaiSiiaoTWlNI1KP9vw==\n-----END PUBLIC KEY-----\n"
+  },
+  "packs": [
+    {
+      "id": "hostile-pack",
+      "name": "<b id=\"injected-name\">Hostile</b>",
+      "summary": "<script id=\"injected-script\">alert(1)</script><img id=\"injected-img\" src=x onerror=alert(2)>",
+      "publisher": "Perforce",
+      "tier": "core",
+      "entitlement": "free",
+      "licence": "Apache-2.0",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "released_at": "2026-10-01",
+          "image": "ghcr.io/puppet-stagehand/packs/hostile-pack@sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        }
+      ]
+    }
+  ],
+  "paid_listings": [
+    {
+      "id": "hostile-paid",
+      "name": "Paid Add-on",
+      "summary": "<script id=\"injected-paid-script\">alert(3)</script>",
+      "tier": "adv",
+      "label": "Perforce add-on, licence required",
+      "versions": [{ "version": "1.0.0", "released_at": "2026-09-15" }]
+    }
+  ]
+}

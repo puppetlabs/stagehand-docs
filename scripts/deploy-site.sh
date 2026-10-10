@@ -44,6 +44,7 @@ aws cloudfront create-invalidation \
   '/features/index.html' \
   '/tiers/index.html' \
   '/compatibility/index.html' \
+  '/marquee/index.html' \
   '/docs/index.html' \
   '/docs/getting-started/index.html' \
   '/docs/security/index.html' \

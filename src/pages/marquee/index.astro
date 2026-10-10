@@ -1,0 +1,66 @@
+---
+import BrandTriangles from '../../components/BrandTriangles.astro';
+import MarqueeCatalog from '../../components/MarqueeCatalog.astro';
+import MarqueeEmptyState from '../../components/MarqueeEmptyState.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadMarquee } from '../../lib/data/marquee';
+
+const marquee = loadMarquee();
+---
+
+<BaseLayout
+  title="Marquee"
+  description="The official Stagehand Expansion Pack catalog, signed by Perforce."
+  canonicalPath="/marquee/"
+>
+  <header class="register-hero register-hero--compatibility">
+    <BrandTriangles class="register-hero__triangles" />
+    <div class="container register-hero__grid">
+      <div>
+        <p class="register-hero__eyebrow">
+          EXPANSION PACK CATALOG / {marquee.packs.length.toString().padStart(2, '0')}
+        </p>
+        <h1>Marquee</h1>
+      </div>
+      <div class="register-hero__lede">
+        <p>
+          Marquee is the official Stagehand Expansion Pack catalog. Every entry is signed by
+          Perforce and checked by your console before anything is installed.
+        </p>
+        <a href="/data/marquee.json" download
+          >Download Marquee data <span aria-hidden="true">↓</span></a
+        >
+      </div>
+    </div>
+  </header>
+
+  <div class="marquee-page">
+    <div class="container">
+      <section class="marquee-block" aria-labelledby="marquee-key-title">
+        <h2 id="marquee-key-title">Publisher key fingerprint</h2>
+        <p>
+          Your console shows this same fingerprint when you add Marquee. Only add the feed if the
+          two match.
+        </p>
+        <p><code class="marquee-fingerprint">{marquee.publisher_key.fingerprint}</code></p>
+        <pre class="marquee-pem"><code>{marquee.publisher_key.pem}</code></pre>
+      </section>
+
+      <section class="marquee-block" aria-labelledby="marquee-add-title">
+        <h2 id="marquee-add-title">How to add Marquee to a console</h2>
+        <p>
+          In the console, open Expansion Packs, choose Add source, and enter this address. The
+          console uses the <code>latest</code> tag when you give none.
+        </p>
+        <p><code class="marquee-address">oci://ghcr.io/puppet-stagehand/catalog</code></p>
+        <p>Consoles set up with the Puppet Installer already have Marquee.</p>
+      </section>
+
+      <section class="marquee-block" aria-labelledby="marquee-packs-title">
+        <h2 id="marquee-packs-title">Expansion Packs</h2>
+        {marquee.packs.length === 0 ? <MarqueeEmptyState /> : null}
+        <MarqueeCatalog packs={marquee.packs} paidListings={marquee.paid_listings} />
+      </section>
+    </div>
+  </div>
+</BaseLayout>

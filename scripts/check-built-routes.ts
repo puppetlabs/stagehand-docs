@@ -6,6 +6,7 @@ const requiredOutputs = [
   'features/index.html',
   'tiers/index.html',
   'compatibility/index.html',
+  'marquee/index.html',
   'docs/index.html',
   'docs/getting-started/index.html',
   'docs/security/index.html',
@@ -19,6 +20,7 @@ const requiredOutputs = [
   'downloads/index.html',
   'support/index.html',
   'data/compatibility.json',
+  'data/marquee.json',
   '404.html',
 ] as const;
 

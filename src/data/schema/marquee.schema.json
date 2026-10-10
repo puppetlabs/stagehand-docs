@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Marquee listing document",
+  "description": "The public catalog listing the Marquee page renders. Written by `expansion-index listing`, replaced by the catalog publish workflow. Paid listings carry catalog metadata only: never an image reference, digest or registry host.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "feed",
+    "index_digest",
+    "publisher_key",
+    "packs",
+    "paid_listings"
+  ],
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "tier": { "enum": ["core", "ent", "adv"] },
+    "text": { "type": "string", "minLength": 1 },
+    "date": { "type": "string", "format": "date" }
+  },
+  "properties": {
+    "schema_version": { "const": 1 },
+    "generated_at": {
+      "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }]
+    },
+    "feed": { "type": "string", "pattern": "^oci://[^\\s]+$" },
+    "index_digest": {
+      "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+    },
+    "publisher_key": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fingerprint", "pem"],
+      "properties": {
+        "fingerprint": { "$ref": "#/$defs/sha256" },
+        "pem": { "$ref": "#/$defs/text" }
+      }
+    },
+    "packs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "publisher",
+          "tier",
+          "entitlement",
+          "licence",
+          "versions"
+        ],
+        "properties": {
+          "id": { "$ref": "#/$defs/text" },
+          "name": { "$ref": "#/$defs/text" },
+          "summary": { "$ref": "#/$defs/text" },
+          "publisher": { "$ref": "#/$defs/text" },
+          "tier": { "$ref": "#/$defs/tier" },
+          "entitlement": { "$ref": "#/$defs/text" },
+          "licence": { "$ref": "#/$defs/text" },
+          "versions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["version", "released_at", "image", "digest"],
+              "properties": {
+                "version": { "$ref": "#/$defs/text" },
+                "released_at": { "$ref": "#/$defs/date" },
+                "image": { "type": "string", "pattern": "^[^\\s@]+@sha256:[a-f0-9]{64}$" },
+                "digest": { "$ref": "#/$defs/sha256" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "paid_listings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "summary", "tier", "label", "versions"],
+        "properties": {
+          "id": { "$ref": "#/$defs/text" },
+          "name": { "$ref": "#/$defs/text" },
+          "summary": { "$ref": "#/$defs/text" },
+          "tier": { "$ref": "#/$defs/tier" },
+          "label": { "const": "Perforce add-on, licence required" },
+          "versions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["version", "released_at"],
+              "properties": {
+                "version": { "$ref": "#/$defs/text" },
+                "released_at": { "$ref": "#/$defs/date" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
